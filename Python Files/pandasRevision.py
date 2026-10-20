@@ -1,10 +1,12 @@
  ### https://www.youtube.com/watch?v=qrMnoY8qBJM
+
  ### coding with sagar
 
 import pandas as pd
 import numpy as np
 import os
 os.chdir("E:\Work & Files\Datasets\Machine Learning A-Z (Codes and Datasets)\Part 1 - Data Preprocessing\Section 2 -------------------- Part 1 - Data Preprocessing --------------------\Python")
+
 
 #### Data Read #####
 dataset = pd.read_csv("Data.csv")
@@ -168,3 +170,94 @@ print(df)
 df["Age"].fillna(df["Age"].mean(), inplace = True)
 print(df)
 ## better use Sklearn SimpleImputer
+
+
+## Interpolating value
+df["Age"] = df["Age"].interpolate(method = "linear")
+print(df)
+
+df["Mark"] = df["Mark"].interpolate(method = "polynomial", order = 3)
+print(df)
+
+
+## Sorting and Aggregation
+
+df.sort_values(by = "Age", ascending = True, inplace = True)
+print(df)
+
+
+df.sort_values(by = ["Age", "Mark"], ascending = [False, True], inplace = True)
+print(df)
+
+
+#Aggregation
+avg_salary = df["Salary"].mean()
+print(avg_salary)
+# min, max, sum, coung, mean, median
+
+avg_salary = df["Salary"].median()
+print(avg_salary)
+
+
+## group
+group_df = df.groupby("Age")["Salary"].sum()
+print(group_df)
+# same age, salary gets sums up
+
+group_df = df.groupby(["Age", "Mark"])["Salary"].sum()
+print(group_df)
+
+
+############### merging and combine ###############
+
+
+datas = {
+    "ID"    : [1, 2, 3, 4, 5],
+    "Name"  : ["Nafiz", "Nahid", "Mohon", "Mahabub", "Mehan"],
+    "Age"   : [20, 5, 18, 25, 12],
+    "City"  : ["Bogura", "Gopalganj", "Vhola", "China", "Chitagong"],
+}
+
+orders = {
+    "ID"    : [1, 2, 3, 4, 5, 6],
+    "Spend" : [1750, 2235, 1045, 2845, 2535, 3450],
+}
+
+df1 = pd.DataFrame(datas)
+df2 = pd.DataFrame(orders)
+
+
+df_merged = pd.merge(df1, df2, on = "ID", how = "inner")
+print(df_merged)
+
+df_merged = pd.merge(df1, df2, on = "ID", how = "outer")
+print(df_merged)
+
+df_merged = pd.merge(df1, df2, on = "ID", how = "right")
+print(df_merged)
+
+df_merged = pd.merge(df1, df2, on = "ID", how = "left")
+print(df_merged)
+
+df_merged = pd.merge(df1, df2, how = "cross")
+print(df_merged)
+
+
+#### concataning dataset
+
+orders1 = {
+    "ID"    : [1, 2, 3, 4, 5, 6],
+    "Spend" : [1750, 2235, 1045, 2845, 2535, 3450],
+}
+
+orders2 = {
+    "ID"    : [1, 2, 3, 4, 5, 6],
+    "City" : ["A", "B", "C", "D", "E", np.nan],
+}
+
+df1 = pd.DataFrame(orders1)
+df2 = pd.DataFrame(orders2)
+
+df_concatanate = pd.concat([df1, df2], axis = 0)
+
+print(df_concatanate)
