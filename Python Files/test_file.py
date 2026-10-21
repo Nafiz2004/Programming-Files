@@ -160,3 +160,23 @@ dataset[(dataset["Age"] >= 18) & (dataset["Mark"] > 75)]["Name"][0][0].lower()
 dataset["City"].str.lower().str[0] #converts whole pandas series lower
 
 dataset[(dataset["Age"] > 5) & (dataset["City"].str.lower().str[0] == "b") & (dataset["Mark"] > 50)]["Name"][0]
+
+
+# System path
+import os
+os.chdir("E:\Work & Files\Projects\KrishiNet\Datasets\Production")
+
+# Importing libries
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Importing Dataset
+dataset = pd.read_csv('MinorCropProduction_2022-24.csv')
+dataset.sort_values(by = "fiscal_year", ascending = True, inplace = True)
+
+x = dataset.iloc[:, 1:7].values
+y = (dataset.iloc[:, 8:9].values) * 1000
+
+print(x)
+print(y)
