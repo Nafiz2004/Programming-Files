@@ -180,3 +180,14 @@ y = (dataset.iloc[:, 8:9].values) * 1000
 
 print(x)
 print(y)
+
+n = input()
+coins_value = list(map(int, input().split()))
+coins_value.sort(reverse = True)
+
+a = 1
+while True:
+  if((sum(coins_value[:a]) > sum(coins_value[a:]))):
+    print(a)
+    break
+  a+=1
