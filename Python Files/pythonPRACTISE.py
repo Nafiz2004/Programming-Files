@@ -32,3 +32,32 @@ for _ in range(n):
 query_name = input()
 avg_score = sum(student_marks[query_name]) / 3
 print("%0.2f" %avg_score)
+
+
+################ nested list #########
+
+nums = []
+if __name__ == '__main__':
+    for _ in range(int(input())):
+        name = input()
+        score = float(input())
+
+        lst = [name, score]
+        nums.append(lst)
+
+nums.sort(key = lambda a : a[1], reverse =True)
+print(nums)
+
+last_val = nums[-1][1]
+while (nums[-1][1] == last_val):
+    nums.pop()
+print(nums)
+last_real_val = nums[-1][1]
+store = []
+for i in range(len(nums)):
+    if nums[i][1] == last_real_val:
+        store.append(nums[i][0])
+
+store.sort()
+for j in store:
+    print(j)
