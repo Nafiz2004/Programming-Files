@@ -66,3 +66,5 @@ print(test_set)
 #
 # housing.iloc[train_set].values
 # housing.iloc[test_set].values
+
+#just test
