@@ -38,17 +38,17 @@ housing = pd.read_csv("E:\Work & Files\Programming Files\Some ML- book projects\
 
 ##########Equivalent of train_test_split NORMAL SPLITTING ###############
 
-# def data_split(data, split_ratio, random_state):
-#     np.random.seed(random_state)
-#     shuffled_rows = np.random.permutation(len(data))
-#     test_size = int(split_ratio * len(data))
-#
-#     test_set_index = shuffled_rows[:test_size]
-#     train_set_index = shuffled_rows[test_size:]
-#
-#     return data.iloc[train_set_index], data.iloc[test_set_index]
-#
-# train_set, test_set = data_split(housing, 0.2, 42)
+def data_split(data, split_ratio, random_state):
+    np.random.seed(random_state)
+    shuffled_rows = np.random.permutation(len(data))
+    test_size = int(split_ratio * len(data))
+
+    test_set_index = shuffled_rows[:test_size]
+    train_set_index = shuffled_rows[test_size:]
+
+    return data.iloc[train_set_index], data.iloc[test_set_index]
+
+train_set, test_set = data_split(housing, 0.2, 42)
 
 # shuffled_rows = np.random.permutation(len(housing))
 # print(shuffled_rows)

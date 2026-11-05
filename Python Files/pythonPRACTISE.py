@@ -61,3 +61,22 @@ for i in range(len(nums)):
 store.sort()
 for j in store:
     print(j)
+
+
+################ factorial #############
+
+def fact(x):
+    if x == 0:
+        return 1
+    return x * fact(x - 1)
+
+print(fact(10))
+
+############# dictionay ################
+
+n = int(input())
+
+d = dict()
+for i in range(1, n+1):
+    d[i] = i * i
+print(d)
