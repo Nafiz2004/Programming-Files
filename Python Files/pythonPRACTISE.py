@@ -80,3 +80,21 @@ d = dict()
 for i in range(1, n+1):
     d[i] = i * i
 print(d)
+
+
+###########
+lst = list(map(int, input().split(",")))
+print(lst)
+tple=tuple(lst)
+print(tple)
+
+lst2 = list(eval(input()))
+print(lst2)
+
+for i in lst2:
+    print(f"{i} -> {type(i)}")
+
+## safe oftion
+import ast
+lst2 = list(ast.literal_eval(input()))
+print(lst2)

@@ -74,7 +74,7 @@ housing["income_cat"] = pd.cut(housing["median_income"],
 
 
 housing["income_cat"].value_counts(normalize = True)
-
+ ## normalize = True means will show in percentage
 from sklearn.model_selection import train_test_split
 train_set, test_set = train_test_split(housing,
                                         test_size = 0.2,
@@ -95,3 +95,37 @@ plt.show()
 
 train_set.drop("income_cat", axis = 1, inplace = True)
 test_set.drop("income_cat", axis = 1, inplace = True)
+
+
+### page
+
+housing.plot(kind="scatter", x="longitude", y="latitude", alpha = 0.3, grid=True)
+plt.show()
+
+housing.plot(kind="scatter", x="longitude", y="latitude", grid=True,
+            s = housing["population"]/100, label = "population", c = "median_house_value",
+            cmap = "jet", colorbar = True, legend = True, sharex = False, figsize = (10, 7))
+plt.show()
+
+corr_matrix = housing.corr(numeric_only = True)
+corr_matrix["median_house_value"].sort_values(ascending = False)
+
+
+from pandas.plotting import scatter_matrix
+
+attributes = ["median_house_value", "median_income", "total_rooms", "housing_median_age"]
+scatter_matrix(housing[attributes], figsize=(12,8))
+plt.show()
+
+housing.plot(kind="scatter", x="median_income", y="median_house_value",
+alpha=0.1, grid=True)
+plt.show()
+
+
+housing["rooms_per_house"] = housing["total_rooms"] / housing["households"]
+housing["bedrooms_ratio"] = housing["total_bedrooms"] / housing["total_rooms"]
+housing["people_per_house"] = housing["population"] / housing["households"]
+
+
+corr_matrix = housing.corr(numeric_only = True)
+corr_matrix["median_house_value"].sort_values(ascending = False)

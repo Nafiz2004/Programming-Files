@@ -5,6 +5,7 @@ nums = list(ast.literal_eval(input("Enter: ")))
 print(datas)
 print(nums)
 
+lst = list(map(int, input().split(",")))
 
 import math
 import matplotlib.pyplot as plt
