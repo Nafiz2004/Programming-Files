@@ -97,7 +97,7 @@ train_set.drop("income_cat", axis = 1, inplace = True)
 test_set.drop("income_cat", axis = 1, inplace = True)
 
 
-### page
+### page 60+
 
 housing.plot(kind="scatter", x="longitude", y="latitude", alpha = 0.3, grid=True)
 plt.show()
@@ -129,3 +129,55 @@ housing["people_per_house"] = housing["population"] / housing["households"]
 
 corr_matrix = housing.corr(numeric_only = True)
 corr_matrix["median_house_value"].sort_values(ascending = False)
+
+
+######### page 67+
+
+print(housing["total_bedrooms"])
+
+total_nan = np.isnan(housing["total_bedrooms"]).value_counts()
+print(total_nan)
+
+# housing["total_bedrooms"].isnull().sum()
+# housing["total_bedrooms"].isnull().value_counts()
+
+
+from sklearn.impute import SimpleImputer
+imputer = SimpleImputer(strategy = "mean")
+housing_num = housing.select_dtypes(include=[np.number]) ## selects only numbers
+
+X = imputer.fit_transform(housing_num)
+
+imputer.statistics_
+imputer.strategy
+
+## gives back pandas dataset
+housing_tr = pd.DataFrame(
+    X,
+    columns=housing_num.columns,
+    index=housing_num.index
+)
+## we can set sklearn.set_config(transform_output = "pandas")
+
+housing_cat = housing[["ocean_proximity"]]
+from sklearn.preprocessing import OrdinalEncoder
+
+encoder = OrdinalEncoder()
+X_encoded = encoder.fit_transform(housing_cat)
+print(X_encoded)
+### assigns 0,1,2,3 ordially ... good for clearn distinction like good, bad, very bad, excellent
+
+
+from sklearn.preprocessing import OneHotEncoder
+
+encoder = OneHotEncoder(sparse_output=False)
+X_encoded = encoder.fit_transform(housing_cat)
+print(X_encoded)
+## handle_unknows = "ignore" very powerful
+## sparse_output = True return numpy which is good but
+## A sparse matrix stores mainly nonzero values and their positions,
+## saving memory and potentially speeding up computations.
+
+X_dense = X_encoded.toarray() ## same as spar = True
+encoder.feature_names_in_
+encoder.get_feature_names_out()

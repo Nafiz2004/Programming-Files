@@ -161,7 +161,7 @@ print(df.isnull().sum())
 #1. Drop whole Row/Columns depending on dataset if that row/columns doen't mean much to model
 #2. Fill in we some value (mean, median)
 
-df.dropna(inplace = True) # axis = 0 -> only rows,,,,, axis = 1 -> only colums
+df.dropna(inplace = True) # axis = 0 -> only rows,,,,, axis = 1 -> only columns
 df.dropna(inplace = True, axis = 0)
 
 print(df)
