@@ -98,3 +98,35 @@ for i in lst2:
 import ast
 lst2 = list(ast.literal_eval(input()))
 print(lst2)
+
+###################
+# Question 5
+# Question: Define a class which has at least two methods:
+# getString: to get a string from console input printString:
+# to print the string in upper case. Also please include simple
+# test function to test the class methods.
+
+
+class basic_func:
+    def __init__(self):
+        self.str = ""
+    def getString(self):
+        self.str = input()
+    def printString(self):
+        print(self.str.upper())
+
+obj = basic_func()
+obj.getString()
+obj.printString()
+
+
+class basic_operation:
+    def getString(self,str):
+        return str
+    def printString(self,value):
+        print(value)
+
+obj2 = basic_operation()
+
+val = obj2.getString("Nafiz")
+obj2.printString(val)
