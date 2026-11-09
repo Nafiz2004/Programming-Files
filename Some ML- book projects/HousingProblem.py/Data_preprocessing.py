@@ -181,3 +181,17 @@ print(X_encoded)
 X_dense = X_encoded.toarray() ## same as spar = True
 encoder.feature_names_in_
 encoder.get_feature_names_out()
+
+###### page 75+
+
+for sklearn.preprocessing import MinMaxScaler
+
+scaler = MinMaxScaler(feature_range = (0, 1)) #(-1,1) also good
+X_scaled = scaler.fit_transform(X)
+
+# clip = True -> helps with outliers
+
+
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
