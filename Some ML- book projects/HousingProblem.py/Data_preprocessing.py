@@ -195,3 +195,21 @@ X_scaled = scaler.fit_transform(X)
 from sklearn.preprocessing import StandardScaler
 scaler = StandardScaler()
 X_scaled = scaler.fit_transform(X)
+
+
+#### better way to use scaling, training without inverse transform
+from sklearn.compose import TransformedTargetRegressor
+model = TransformedTargetRegressor(LinearRegression(), transformer = StandardScaler)
+model.fit(x,y)
+## used LinearRegression(), StandardScaler(), inverse_transform() at the same time
+y_pred = model.predict(x_)
+
+
+log_pop = np.log(housing[["population"]])
+print(log_pop)
+### to make it sklearn compatible .....
+
+from sklearn.preprocessing import FunctionTransformer
+log_transformer = FunctionTransformer(np.log, inverse_func = np.exp)
+log_pop = log_transformer.transform(housing["population"])
+print(log_pop)
