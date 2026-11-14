@@ -28,3 +28,22 @@ df.describe()
 ######################
 df['animal'][[3,4,8]]
 df["age"][[3,4,8]]
+
+####################
+import pandas as pd
+missing_val_rows = df[df["age"].isnull()]
+print(missing_val_rows)
+
+
+##11
+animaL_age = df[(df["animal"].str.lower() == "cat") & (df["age"] < 3)]
+print(animaL_age)
+
+
+age_margin = df[df["age"].between(2,4)]
+
+print(age_margin)
+
+df.loc["f", "age"] = 1.5
+
+print(df["age"])

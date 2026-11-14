@@ -155,7 +155,17 @@ print(df)
 
 ### handling missing data
 print(df.isnull())
+
+# will show only true-false
+df.isna()
+df.isnull()
+
 print(df.isnull().sum())
+ # will show straight value
+df.isna
+df.isnull
+
+
 
 # 2 ways to handle
 #1. Drop whole Row/Columns depending on dataset if that row/columns doen't mean much to model
