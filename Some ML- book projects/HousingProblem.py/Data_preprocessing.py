@@ -213,3 +213,14 @@ from sklearn.preprocessing import FunctionTransformer
 log_transformer = FunctionTransformer(np.log, inverse_func = np.exp)
 log_pop = log_transformer.transform(housing["population"])
 print(log_pop)
+
+
+from sklearn.preprocessing import FunctionTransformer
+from sklearn.metrics.pairwise import rbf_kernel
+
+rbf_transformer = FunctionTransformer(rbf_kernel,
+                                    kw_args = dict(Y = [[35.]],gamma = 0.1))
+
+
+age_similitarity = rbf_transformer.transform(housing[["housing_median_age"]])
+print(age_similitarity)
