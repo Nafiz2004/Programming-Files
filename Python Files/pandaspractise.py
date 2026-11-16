@@ -47,3 +47,30 @@ print(age_margin)
 df.loc["f", "age"] = 1.5
 
 print(df["age"])
+
+
+########## 14
+sum(df["visits"])
+
+age = df["age"].mean()
+print(age)
+
+df.loc["k"] = ["dog", 5, "no", 2]    ############ adding a row ##########
+df.drop(k)
+print(df)
+
+
+df["animal"].value_counts()
+
+df.sort_values(by = ["age", "visits"], ascending = [False, True])
+
+
+df["priority"] = df["priority"].map({'yes': True, 'no': False})
+print(df)
+
+print(df)
+df["animal"] = df["animal"].replace("snake", "python")
+
+print(df)
+
+df.pivot_table(index='animal', columns='visits', values='age', aggfunc='mean')
