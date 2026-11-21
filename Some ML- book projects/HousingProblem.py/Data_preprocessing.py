@@ -6,33 +6,31 @@ import urllib.request
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-# load data
-# def load_housing_data():
-#     tarball_path = Path("datasets/housing.tgz")
-#     if not tarball_path.is_file():
-#         Path("datasets").mkdir(parents=True, exist_ok=True)
-#         url = "https://github.com/ageron/data/raw/main/housing.tgz"
-#         urllib.request.urlretrieve(url, tarball_path)
-#         with tarfile.open(tarball_path) as housing_tarball:
-#             housing_tarball.extractall(path="datasets")
-#     return pd.read_csv(Path("datasets/housing/housing.csv"))
+# Load Data
+def load_housing_data():
+    tarball_path = Path("datasets/housing.tgz")
+    if not tarball_path.is_file():
+        Path("datasets").mkdir(parents=True, exist_ok=True)
+        url = "https://github.com/ageron/data/raw/main/housing.tgz"
+        urllib.request.urlretrieve(url, tarball_path)
+        with tarfile.open(tarball_path) as housing_tarball:
+            housing_tarball.extractall(path="datasets")
+    return pd.read_csv(Path("datasets/housing/housing.csv"))
 
 # housing = load_housing_data()
 housing = pd.read_csv("E:\Work & Files\Programming Files\Some ML- book projects\Dataset\\archive\housing.csv")
 
-# print(housing)
-# print(housing.head())
-# print(housing.info())
-# print(housing.describe())
-# housing["ocean_proximity"].value_counts()
-#
-#
-# total_nan = np.isnan(housing["total_bedrooms"])
-# total_nan.value_counts()
-#
-# housing.hist(bins = 50,figsize=(12,8))
-# plt.show()
+print(housing)
+print(housing.head())
+print(housing.info())
+print(housing.describe())
+housing["ocean_proximity"].value_counts()
+
+total_nan = np.isnan(housing["total_bedrooms"])
+total_nan.value_counts()
+
+housing.hist(bins = 50,figsize=(12,8))
+plt.show()
 
 
 
@@ -50,20 +48,20 @@ def data_split(data, split_ratio, random_state):
 
 train_set, test_set = data_split(housing, 0.2, 42)
 
-# shuffled_rows = np.random.permutation(len(housing))
-# print(shuffled_rows)
-# test_size = int(.2 * len(housing))
-#
-# print(test_size)
-#
-# test_set = shuffled_rows[:test_size]
-# train_set = shuffled_rows[test_size:]
-#
-# print(test_set)
-# print(train_set)
-#
-# housing.iloc[train_set].values
-# housing.iloc[test_set].values
+shuffled_rows = np.random.permutation(len(housing))
+print(shuffled_rows)
+test_size = int(.2 * len(housing))
+
+print(test_size)
+
+test_set = shuffled_rows[:test_size]
+train_set = shuffled_rows[test_size:]
+
+print(test_set)
+print(train_set)
+
+housing.iloc[train_set].values
+housing.iloc[test_set].values
 
 
 #####################stratified splitting###################
@@ -207,12 +205,17 @@ y_pred = model.predict(x_)
 
 log_pop = np.log(housing[["population"]])
 print(log_pop)
+
 ### to make it sklearn compatible .....
 
 from sklearn.preprocessing import FunctionTransformer
 log_transformer = FunctionTransformer(np.log, inverse_func = np.exp)
 log_pop = log_transformer.transform(housing["population"])
 print(log_pop)
+# reverse
+
+log_pop_original = log_transformer.inverse_transform(log_pop)
+print(log_pop_original)
 
 
 from sklearn.preprocessing import FunctionTransformer
@@ -221,6 +224,38 @@ from sklearn.metrics.pairwise import rbf_kernel
 rbf_transformer = FunctionTransformer(rbf_kernel,
                                     kw_args = dict(Y = [[35.]],gamma = 0.1))
 
-
 age_similitarity = rbf_transformer.transform(housing[["housing_median_age"]])
 print(age_similitarity)
+
+new_column_transformer = FunctionTransformer(
+    lambda x: x[:, [0]] / x[:, [1]]
+)
+
+test_transform = new_column_transformer.transform(
+    np.array([[10., 20., 30.],[2., 3., 4.]]))
+print(test_transform)
+
+
+## Custom StandardScaler
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.utils.validation import check_array, check_is_fitted
+
+class StandardScalerClone(BaseEstimator, TransformerMixin):
+
+    def __init__(self, with_mean = True):
+        self.with_mean = with_mean
+
+    def fit(self, X, y = None):
+        X = check_array(X)
+        self.mean_ = X.mean(axis = 0)
+        self.scale_ = X.std(axis = 0)
+        self.n_features_in_ = X.shape[1]
+        return self
+
+    def transform(self, X):
+        check_is_fitted(self)
+        X = check_array(X)
+        assert self.n_features_in_ == X.shape[1]
+        if self.with_mean:
+            X = X - self.mean_
+        return X / self.scale_
