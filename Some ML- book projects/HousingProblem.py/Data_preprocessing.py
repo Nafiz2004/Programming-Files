@@ -283,6 +283,22 @@ class ClusterSimilarity(BaseEstimator, TransformerMixin):
 
 
 clus_sim = ClusterSimilarity(n_clusters = 10, gamma = 1.0, random_state = 42)
-similarities = clus_sim.fit_transform(housing[["latitude", "longitude"]], sample_weight = housing["median_house_value"])
+similarities = clus_sim.fit_transform(housing[["latitude", "longitude"]],
+                                            sample_weight = housing["median_house_value"])
 
 similarities[:3].round(2)
+
+##### Transformation Piplelines #####
+
+from sklearn.pipleline import Pipeline, make_pipeline
+
+## can give custom name
+num_pipleline = Pipeline([
+    ("impute", SimpleImputer(strategy = 'median')),
+    ("standardize", StandardScaler()),
+    ("regression", LinearRegression())
+])
+
+## auto names
+num_pipleline_2 = make_pipeline(
+    SimpleImputer(strategy = "median"),StandardScaler(), LinearRegression())
