@@ -298,7 +298,11 @@ num_pipleline = Pipeline([
     ("standardize", StandardScaler()),
     ("regression", LinearRegression())
 ])
+## SimpleImputer -> most_frequent
 
 ## auto names
 num_pipleline_2 = make_pipeline(
     SimpleImputer(strategy = "median"),StandardScaler(), LinearRegression())
+
+
+### preprocessing
