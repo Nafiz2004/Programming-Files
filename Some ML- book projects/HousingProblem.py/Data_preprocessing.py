@@ -304,5 +304,4 @@ num_pipleline = Pipeline([
 num_pipleline_2 = make_pipeline(
     SimpleImputer(strategy = "median"),StandardScaler(), LinearRegression())
 
-
 ### preprocessing
